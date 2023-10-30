@@ -1,11 +1,11 @@
-const http = require("http"); //Подключаем модуль HTTP
-const fs = require("fs"); //Подключаем модуль fs для работы с файлами
-const path = require("path"); //Для использования привычных относительных путей подключаем модуль path
+// Для запуска сервера необходимо выполнить команду в терминале node src/app.js
+// Для того, чтобы при внесении изменений не приходилось каждый раз перезапускать сервер,
+// установим пакет nodemon. Для этого выполним команду:  npm install nodemon --save-dev
+// или же команду: npm i nodemon -dev
+// Теперь сервер можно запускать при помощи команды: nodemon src/app.js Но ее надо добавить в скрипты package.json
 
-const getUsers = () => {
-  const filePath = path.join(__dirname, "./data/users.json");
-  return fs.readFileSync(filePath);
-}; //При помощи функции readFileSync синхронно получаем список пользователей из файла. Путь - относительно той папки, из которой запущен скрипт
+const http = require("http"); //Подключаем модуль HTTP
+const getUsers = require("./modules/users"); //Модуль с пользовательской функцией для получения списка из файла
 
 const server = http.createServer((request, response) => {
   //Параметр request храит информацию о запросе
@@ -34,7 +34,7 @@ const server = http.createServer((request, response) => {
   response.statusCode = 200;
   response.statusMessage = "OK";
   response.setHeader("Content-Type", "text/plain; charset=utf-8");
-  response.write("Приветствую тебя на этом сервере, мой юный друг!");
+  response.write("Приветствую тебя на этом сервере, мой маленький друг!");
   response.end();
 }); //При помощи метода createServer создаем (инитим) сервер
 
